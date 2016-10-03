@@ -2,6 +2,7 @@
 language: Elm
 contributors:
     - ["Max Goldstein", "http://maxgoldste.in/"]
+filename: learnelm.elm
 ---
 
 Elm is a functional reactive programming language that compiles to (client-side)
@@ -156,6 +157,7 @@ List.map (\a -> a * 2) [1..4] -- [2, 4, 6, 8]
 
 -- You can pattern match in function definitions when there's only one case.
 -- This function takes one tuple rather than two arguments.
+-- This is the way you'll usually unpack/extract values from tuples.
 area (width, height) =
   width * height
 
