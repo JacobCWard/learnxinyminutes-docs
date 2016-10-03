@@ -8,6 +8,7 @@ contributors:
     - ["Wouter Van Schandevijl", "http://github.com/laoujin"]
     - ["Jo Pearce", "http://github.com/jdpearce"]
     - ["Chris Zimmerman", "https://github.com/chriszimmerman"]
+    - ["Shawn McGuire", "https://github.com/bigbash"]
 filename: LearnCSharp.cs
 ---
 
@@ -212,10 +213,10 @@ on a new line! ""Wow!"", the masses cried";
             // Incrementations
             int i = 0;
             Console.WriteLine("\n->Inc/Dec-rementation");
-            Console.WriteLine(i++); //i = 1. Post-Incrementation
-            Console.WriteLine(++i); //i = 2. Pre-Incrementation
-            Console.WriteLine(i--); //i = 1. Post-Decrementation
-            Console.WriteLine(--i); //i = 0. Pre-Decrementation
+            Console.WriteLine(i++); //Prints "0", i = 1. Post-Incrementation
+            Console.WriteLine(++i); //Prints "2", i = 2. Pre-Incrementation
+            Console.WriteLine(i--); //Prints "2", i = 1. Post-Decrementation
+            Console.WriteLine(--i); //Prints "0", i = 0. Pre-Decrementation
 
             ///////////////////////////////////////
             // Control Structures
@@ -458,7 +459,7 @@ on a new line! ""Wow!"", the masses cried";
                 if (i > limit/2) yield break;
                 yield return i;
             }
-        }             
+        }
 
         public static void OtherInterestingFeatures()
         {
@@ -825,7 +826,7 @@ on a new line! ""Wow!"", the masses cried";
         }
 
         // Methods can also be static. It can be useful for helper methods
-        public static bool DidWeCreateEnoughBycles()
+        public static bool DidWeCreateEnoughBicycles()
         {
             // Within a static method, we only can reference static class members
             return BicyclesCreated > 9000;
@@ -947,6 +948,66 @@ on a new line! ""Wow!"", the masses cried";
             A.A2();
         }
     }
+
+    // String interpolation by prefixing the string with $
+    // and wrapping the expression you want to interpolate with { braces }
+    public class Rectangle
+    {
+        public int Length { get; set; }
+        public int Width { get; set; }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Rectangle rect = new Rectangle { Length = 5, Width = 3 };
+            Console.WriteLine($"The length is {rect.Length} and the width is {rect.Width}");
+        }
+    }
+
+    // New C# 6 features
+    class GlassBall : IJumpable, IBreakable
+    {
+        // Autoproperty initializers
+        public int Damage { get; private set; } = 0;
+
+        // Autoproperty initializers on getter-only properties
+        public string Name { get; } = "Glass ball";
+
+        // Getter-only autoproperty that is initialized in constructor
+        public string GenieName { get; }
+
+        public GlassBall(string genieName = null)
+        {
+            GenieName = genieName;
+        }
+
+        public void Jump(int meters)
+        {
+            if (meters < 0)
+                // New nameof() expression; compiler will check that the identifier exists
+                // nameof(x) == "x"
+                // Prevents e.g. parameter names changing but not updated in error messages
+                throw new ArgumentException("Cannot jump negative amount!", nameof(meters));
+
+            Damage += meters;
+        }
+
+        // Expression-bodied properties ...
+        public bool Broken
+            => Damage > 100;
+
+        // ... and methods
+        public override string ToString()
+            // Interpolated string
+            => $"{Name}. Damage taken: {Damage}";
+
+        public string SummonGenie()
+            // Null-conditional operators
+            // x?.y will return null immediately if x is null; y is not evaluated
+            => GenieName?.ToUpper();
+    }
 } // End Namespace
 ```
 
@@ -954,6 +1015,8 @@ on a new line! ""Wow!"", the masses cried";
 
  * Attributes
  * async/await, pragma directives
+ * Exception filters
+ * `using static`
  * Web Development
  	* ASP.NET MVC & WebApi (new)
  	* ASP.NET Web Forms (old)

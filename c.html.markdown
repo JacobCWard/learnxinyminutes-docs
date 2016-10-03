@@ -143,9 +143,9 @@ int main (int argc, char** argv)
   // can be declared as well. The size of such an array need not be a compile
   // time constant:
   printf("Enter the array size: "); // ask the user for an array size
-  int size;
-  fscanf(stdin, "%d", &size);
-  int var_length_array[size]; // declare the VLA
+  int array_size;
+  fscanf(stdin, "%d", &array_size);
+  int var_length_array[array_size]; // declare the VLA
   printf("sizeof array = %zu\n", sizeof var_length_array);
 
   // Example:
@@ -236,11 +236,9 @@ int main (int argc, char** argv)
   z = (e > f) ? e : f; // => 10 "if e > f return e, else return f."
 
   // Increment and decrement operators:
-  char *s = "ILoveC";
   int j = 0;
-  s[j++]; // => "i". Returns the j-th item of s THEN increments value of j.
-  j = 0;
-  s[++j]; // => "L". Increments value of j THEN returns j-th value of s.
+  int s = j++; // Return j THEN increase j. (s = 0, j = 1)
+  s = ++j; // Increase j THEN return j. (s = 2, j = 2)
   // same with j-- and --j
 
   // Bitwise operators!
@@ -449,7 +447,8 @@ int main (int argc, char** argv)
   int size = 10;
   int *my_arr = malloc(sizeof(int) * size);
   // Add an element to the array
-  my_arr = realloc(my_arr, ++size);
+  size++;
+  my_arr = realloc(my_arr, sizeof(int) * size);
   my_arr[10] = 5;
 
   // Dereferencing memory that you haven't allocated gives
@@ -512,6 +511,7 @@ void str_reverse(char *str_in)
     str_in[len - ii - 1] = tmp;
   }
 }
+//NOTE: string.h header file needs to be included to use strlen()
 
 /*
 char c[] = "This is a test.";
